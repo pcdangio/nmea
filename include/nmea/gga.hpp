@@ -21,7 +21,7 @@ struct gga
         PPS = 3,                ///< Pulse Per Second (PPS) fix.
         RTK = 4,                ///< Real-Time Kinematic (RTK) fix.
         RTK_FLOAT = 5,          ///< Real-Time Kinematic (RTK) floating point fix.
-        DEAD_RECKONING = 6,     ///< Estimated dead reckoning fix.
+        ESTIMATED = 6,          ///< Estimated dead reckoning fix.
         MANUAL = 7,             ///< Manual input mode.
         SIMULATION = 8          ///< Simulation mode.
     };
@@ -29,7 +29,7 @@ struct gga
     // CONSTRUCTORS
     /// \brief Creates a new GGA instance from an NMEA sentence.
     /// \param sentence The NMEA sentence to parse the GGA sentence from.
-    gga(nmea::sentence& sentence);
+    gga(const nmea::sentence& sentence);
 
     // FIELDS
     /// \brief The name of the sentence talker.
