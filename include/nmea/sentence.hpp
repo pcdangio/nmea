@@ -15,9 +15,9 @@ class sentence
 public:
     // CONSTRUCTORS
     /// \brief Creates a new sentence instance from a received NMEA string.
-    /// \param string The NMEA 0183 string to parse.
+    /// \param nmea_string The NMEA 0183 string to parse.
     /// \exception std::runtime_error if the provided string is not a valid NMEA sentence.
-    sentence(const std::string& string);
+    sentence(const std::string& nmea_string);
     /// \brief Creates a new empty sentence instance.
     /// \param talker The name of the sentence talker.
     /// \param type The type of the sentence.
@@ -46,7 +46,7 @@ public:
     /// \brief Gets the sentence as an NMEA string, with CRLF appended.
     /// \param encapsulated Indicates if this sentence is an encapsulated type, and should start with '!' instead of '$'.
     /// \returns The NMEA string representation of the sentence.
-    std::string string(bool encapsulated = false) const;    
+    std::string nmea_string(bool encapsulated = false) const;    
 
 private:
     // VARIABLES
@@ -59,14 +59,14 @@ private:
 
     // UTILITY
     /// \brief Validates an NMEA string.
-    /// \param string The NMEA string to validate.
+    /// \param nmea_string The NMEA string to validate.
     /// \returns TRUE if the string is valid, otherwise FALSE.
-    static bool validate(const std::string& string);
+    static bool validate(const std::string& nmea_string);
     /// \brief Calculates the checksum of an NMEA string.
-    /// \param string The NMEA string to calculate the checksum for.
+    /// \param nmea_string The NMEA string to calculate the checksum for.
     /// \param checksum_index The index of the checksum delimeter (*) in the string.
     /// \returns The 2-character hex checksum.
-    static std::string checksum(const std::string& string, std::size_t checksum_index);
+    static std::string checksum(const std::string& nmea_string, std::size_t checksum_index);
 };
 
 }

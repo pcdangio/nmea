@@ -7,21 +7,21 @@
 using namespace nmea;
 
 // CONSTRUCTOR
-sentence::sentence(const std::string& string)
+sentence::sentence(const std::string& nmea_string)
 {
     // Validate string.
-    if(!sentence::validate(string))
+    if(!sentence::validate(nmea_string))
     {
         throw std::runtime_error("nmea string is invalid");
     }
 
     // Get first field, which is the tag.
-    std::size_t delimeter_index = string.find_first_of(',');
+    std::size_t delimeter_index = nmea_string.find_first_of(',');
     // Talker, assuming the last 3 characters of the tag field are the message type.
     // NOTE: This allows for talkers that are greater than 2 characters.
-    sentence::m_talker = string.substr(1, delimeter_index - 4);
+    sentence::m_talker = nmea_string.substr(1, delimeter_index - 4);
     // Type, assuming it is always 3 characters.
-    sentence::m_type = string.substr(delimeter_index - 3, 3);
+    sentence::m_type = nmea_string.substr(delimeter_index - 3, 3);
 
     // Get remainder of fields.
     while(delimeter_index != std::string::npos)
@@ -29,7 +29,7 @@ sentence::sentence(const std::string& string)
         // Delimeter is pointing to the comma at the start of this field.
 
         // Find the index of the next comma.
-        std::size_t next_delimiter_index = string.find_first_of(',', delimeter_index + 1);
+        std::size_t next_delimiter_index = nmea_string.find_first_of(',', delimeter_index + 1);
 
         // Calculate the read length.
         std::size_t read_length;
@@ -37,7 +37,7 @@ sentence::sentence(const std::string& string)
         {
             // No following comma found, so must be at end of the string.
             // NOTE: string is already checked to be valid, so it must have checksum.
-            read_length = string.find_last_of('*') - delimeter_index - 1;
+            read_length = nmea_string.find_last_of('*') - delimeter_index - 1;
         }
         else
         {
@@ -46,7 +46,7 @@ sentence::sentence(const std::string& string)
         }
 
         // Pull substring into field.
-        sentence::m_fields.push_back(string.substr(delimeter_index + 1, read_length));
+        sentence::m_fields.push_back(nmea_string.substr(delimeter_index + 1, read_length));
 
         // Update delimeter index.
         delimeter_index = next_delimiter_index;
@@ -59,47 +59,47 @@ sentence::sentence(const std::string& talker, const std::string& type, uint8_t n
 {}
 
 // STATIC
-bool sentence::validate(const std::string& string)
+bool sentence::validate(const std::string& nmea_string)
 {
     // Check for empty string.
-    if(string.empty())
+    if(nmea_string.empty())
     {
         return false;
     }
 
     // Check for $/! as first character.
-    if(!(string.front() == '$' || string.front() == '!'))
+    if(!(nmea_string.front() == '$' || nmea_string.front() == '!'))
     {
         return false;
     }
     
     // Check for * character.
-    std::size_t checksum_index = string.find_last_of('*');
+    std::size_t checksum_index = nmea_string.find_last_of('*');
     if(checksum_index == std::string::npos)
     {
         return false;
     }
 
     // Verify string includes checksum data.
-    if(string.length() < checksum_index + 3)
+    if(nmea_string.length() < checksum_index + 3)
     {
         return false;
     }
 
     // Calculate expected checksum.
-    std::string expected_checksum = sentence::checksum(string, checksum_index);
+    std::string expected_checksum = sentence::checksum(nmea_string, checksum_index);
 
     // Compare to actual checksum.
-    return string.compare(checksum_index + 1, 2, expected_checksum, 0, 2) == 0;
+    return nmea_string.compare(checksum_index + 1, 2, expected_checksum, 0, 2) == 0;
 }
-std::string sentence::checksum(const std::string& string, std::size_t checksum_index)
+std::string sentence::checksum(const std::string& nmea_string, std::size_t checksum_index)
 {
     // Calculate checksum = XOR of everything between $/! and *
     // NOTE: checksum_index = index of * delimiter.
     uint8_t checksum = 0;
     for(uint8_t i = 1; i < checksum_index; ++i)
     {
-        checksum ^= string.at(i);
+        checksum ^= nmea_string.at(i);
     }
 
     // Convert checksum to hex string.
@@ -145,40 +145,40 @@ void sentence::set_field(uint8_t field, const std::string& value)
         sentence::m_fields.at(field) = value;
     }
 }
-std::string sentence::string(bool encapsulated) const
+std::string sentence::nmea_string(bool encapsulated) const
 {
     // Create output string.
-    std::string string;
+    std::string nmea_string;
 
     // Write start delimiter.
     if(!encapsulated)
     {
-        string.append("$");
+        nmea_string.append("$");
     }
     else
     {
-        string.append("!");
+        nmea_string.append("!");
     }
 
     // Write talker and type.
-    string.append(sentence::m_talker);
-    string.append(sentence::m_type);
+    nmea_string.append(sentence::m_talker);
+    nmea_string.append(sentence::m_type);
     
     // Write fields.
     for(auto field = sentence::m_fields.cbegin(); field != sentence::m_fields.cend(); ++field)
     {
-        string.append(",");
-        string.append(*field);
+        nmea_string.append(",");
+        nmea_string.append(*field);
     }
 
     // Write checksum delimeter.
-    string.append("*");
+    nmea_string.append("*");
 
     // Calculate and write checksum.
-    string.append(sentence::checksum(string, string.length() - 1));
+    nmea_string.append(sentence::checksum(nmea_string, nmea_string.length() - 1));
 
     // Write CRLF.
-    string.append("\r\n");
+    nmea_string.append("\r\n");
 
-    return string;
+    return nmea_string;
 }
