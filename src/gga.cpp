@@ -1,6 +1,6 @@
 #include <nmea/gga.hpp>
 
-#include <parse.hpp>
+#include "parse.hpp"
 
 #include <sstream>
 #include <iomanip>
