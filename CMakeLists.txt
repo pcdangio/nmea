@@ -11,5 +11,8 @@ file(GLOB_RECURSE sources ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
 # Create library.
 add_library(nmea STATIC ${sources})
 
+include_directories(include)
+add_executable(tester ${sources})
+
 # Set include directories for internal/external use.
 target_include_directories(nmea PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
