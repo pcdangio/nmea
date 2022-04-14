@@ -16,9 +16,7 @@ public:
     // CONSTRUCTORS
     /// \brief Creates a new sentence instance from a received NMEA string.
     /// \param nmea_string The NMEA 0183 string to parse.
-    /// \param validated Indicates if the NMEA string has already been validated, disabling internal checking.
-    /// \exception std::runtime_error if the provided string is not a valid NMEA sentence.
-    sentence(const std::string& nmea_string, bool validated = false);
+    sentence(const std::string& nmea_string);
     /// \brief Creates a new empty sentence instance.
     /// \param talker The name of the sentence talker.
     /// \param type The type of the sentence.

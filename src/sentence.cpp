@@ -1,20 +1,13 @@
 #include <nmea/sentence.hpp>
 
-#include <stdexcept>
 #include <sstream>
 #include <iomanip>
 
 using namespace nmea;
 
 // CONSTRUCTOR
-sentence::sentence(const std::string& nmea_string, bool validated)
+sentence::sentence(const std::string& nmea_string)
 {
-    // Validate string if required.
-    if(!validated && !sentence::validate(nmea_string))
-    {
-        throw std::runtime_error("nmea string is invalid");
-    }
-
     // Get first field, which is the tag.
     std::size_t delimeter_index = nmea_string.find_first_of(',');
     // Talker, assuming the last 3 characters of the tag field are the message type.
