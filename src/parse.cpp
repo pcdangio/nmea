@@ -128,7 +128,7 @@ void nmea::parse_longitude(nmea::field<double>& field, const nmea::sentence& sen
         double longitude = std::stod(longitude_string.substr(0,3));
 
         // Parse minutes and convert to decimal degrees.
-        longitude += std::stod(longitude_string.substr(2)) / 60.0;
+        longitude += std::stod(longitude_string.substr(3)) / 60.0;
 
         // Get longitude direction.
         if(direction_string == "W")
