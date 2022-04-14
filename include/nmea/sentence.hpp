@@ -16,13 +16,20 @@ public:
     // CONSTRUCTORS
     /// \brief Creates a new sentence instance from a received NMEA string.
     /// \param nmea_string The NMEA 0183 string to parse.
+    /// \param validated Indicates if the NMEA string has already been validated, disabling internal checking.
     /// \exception std::runtime_error if the provided string is not a valid NMEA sentence.
-    sentence(const std::string& nmea_string);
+    sentence(const std::string& nmea_string, bool validated = false);
     /// \brief Creates a new empty sentence instance.
     /// \param talker The name of the sentence talker.
     /// \param type The type of the sentence.
     /// \param n_fields The number of data fields in the sentence.
     sentence(const std::string& talker, const std::string& type, uint8_t n_fields = 0);
+
+    // UTILITY
+    /// \brief Validates an NMEA string.
+    /// \param nmea_string The NMEA string to validate.
+    /// \returns TRUE if the string is valid, otherwise FALSE.
+    static bool validate(const std::string& nmea_string);
 
     // PROPERTIES
     /// \brief Gets the talker of the sentence.
@@ -58,10 +65,6 @@ private:
     std::vector<std::string> m_fields;
 
     // UTILITY
-    /// \brief Validates an NMEA string.
-    /// \param nmea_string The NMEA string to validate.
-    /// \returns TRUE if the string is valid, otherwise FALSE.
-    static bool validate(const std::string& nmea_string);
     /// \brief Calculates the checksum of an NMEA string.
     /// \param nmea_string The NMEA string to calculate the checksum for.
     /// \param checksum_index The index of the checksum delimeter (*) in the string.

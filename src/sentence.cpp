@@ -7,10 +7,10 @@
 using namespace nmea;
 
 // CONSTRUCTOR
-sentence::sentence(const std::string& nmea_string)
+sentence::sentence(const std::string& nmea_string, bool validated)
 {
-    // Validate string.
-    if(!sentence::validate(nmea_string))
+    // Validate string if required.
+    if(!validated && !sentence::validate(nmea_string))
     {
         throw std::runtime_error("nmea string is invalid");
     }
