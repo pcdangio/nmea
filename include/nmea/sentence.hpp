@@ -33,7 +33,7 @@ public:
     std::string type() const;
     /// \brief Gets the number of data fields in the sentence.
     /// \brief The number of data fields.
-    uint8_t n_fields() const;
+    uint8_t field_count() const;
     /// \brief Gets a data field from the sentence.
     /// \param field The index of the data field to retrieve.
     /// \returns The value of the field, or empty string if the field does not exist.

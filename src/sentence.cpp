@@ -118,7 +118,7 @@ std::string sentence::type() const
 {
     return sentence::m_type;
 }
-uint8_t sentence::n_fields() const
+uint8_t sentence::field_count() const
 {
     return sentence::m_fields.size();
 }
