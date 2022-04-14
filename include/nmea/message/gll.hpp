@@ -1,4 +1,4 @@
-/// \file nmea/gll.hpp
+/// \file nmea/message/gll.hpp
 /// \brief Defines the nmea::gll struct.
 #ifndef NMEA___GLL_H
 #define NMEA___GLL_H

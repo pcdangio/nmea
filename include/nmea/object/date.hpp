@@ -1,4 +1,4 @@
-/// \file nmea/date.hpp
+/// \file nmea/object/date.hpp
 /// \brief Defines the nmea::date struct.
 #ifndef NMEA___DATE_H
 #define NMEA___DATE_H

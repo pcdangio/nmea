@@ -1,4 +1,4 @@
-/// \file nmea/rmc.hpp
+/// \file nmea/message/rmc.hpp
 /// \brief Defines the nmea::rmc struct.
 #ifndef NMEA___RMC_H
 #define NMEA___RMC_H

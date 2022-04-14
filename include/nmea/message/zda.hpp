@@ -1,4 +1,4 @@
-/// \file nmea/zda.hpp
+/// \file nmea/message/zda.hpp
 /// \brief Defines the nmea::zda struct.
 #ifndef NMEA___ZDA_H
 #define NMEA___ZDA_H

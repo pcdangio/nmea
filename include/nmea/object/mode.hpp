@@ -1,4 +1,4 @@
-/// \file nmea/mode.hpp
+/// \file nmea/object/mode.hpp
 /// \brief Defines the nmea::mode enumeration.
 #ifndef NMEA___MODE_H
 #define NMEA___MODE_H

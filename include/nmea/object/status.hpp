@@ -1,4 +1,4 @@
-/// \file nmea/status.hpp
+/// \file nmea/object/status.hpp
 /// \brief Defines the nmea::status enumeration.
 #ifndef NMEA___STATUS_H
 #define NMEA___STATUS_H

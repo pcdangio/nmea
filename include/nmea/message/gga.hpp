@@ -1,4 +1,4 @@
-/// \file nmea/gga.hpp
+/// \file nmea/message/gga.hpp
 /// \brief Defines the nmea::gga struct.
 #ifndef NMEA___GGA_H
 #define NMEA___GGA_H

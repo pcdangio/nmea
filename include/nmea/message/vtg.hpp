@@ -1,4 +1,4 @@
-/// \file nmea/vtg.hpp
+/// \file nmea/message/vtg.hpp
 /// \brief Defines the nmea::vtg struct.
 #ifndef NMEA___VTG_H
 #define NMEA___VTG_H

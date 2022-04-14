@@ -1,4 +1,4 @@
-/// \file nmea/gsv.hpp
+/// \file nmea/message/gsv.hpp
 /// \brief Defines the nmea::gsv struct.
 #ifndef NMEA___GSV_H
 #define NMEA___GSV_H
