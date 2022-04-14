@@ -21,11 +21,11 @@ struct zda
     std::string talker;
     /// \brief The UTC time of day, in seconds.
     nmea::field<double> utc;
-    /// \brief The day component of the date.
+    /// \brief The day component of the GMT date.
     nmea::field<uint8_t> day;
-    /// \brief The month component of the date.
+    /// \brief The month component of the GMT date.
     nmea::field<uint8_t> month;
-    /// \brief The year component of the date.
+    /// \brief The year component of the GMT date.
     nmea::field<uint16_t> year;
     /// \brief The hour component of the local time zone offset from GMT.
     nmea::field<int8_t> gmt_offset_hours;
