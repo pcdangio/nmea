@@ -1,5 +1,7 @@
 #include <nmea/gsa.hpp>
 
+#include "parse.hpp"
+
 using namespace nmea;
 
 // CONSTRUCTORS
@@ -23,11 +25,7 @@ gsa::gsa(const nmea::sentence& sentence)
     }
 
     // Parse fix type.
-    std::string fix_string = sentence.get_field(1);
-    if(!fix_string.empty())
-    {
-        gsa::fix.set(static_cast<gsa::fix_type>(std::stoi(fix_string)));
-    }
+    nmea::parse::set_enum(gsa::fix, sentence, 1);
 
     // Parse satellite IDs.
     gsa::satellites.reserve(12);
@@ -46,30 +44,14 @@ gsa::gsa(const nmea::sentence& sentence)
     }
 
     // Parse PDOP.
-    std::string pdop_string = sentence.get_field(14);
-    if(!pdop_string.empty())
-    {
-        gsa::pdop.set(std::stof(pdop_string));
-    }
+    nmea::parse::set_float(gsa::pdop, sentence, 14);
 
     // Parse HDOP.
-    std::string hdop_string = sentence.get_field(15);
-    if(!hdop_string.empty())
-    {
-        gsa::hdop.set(std::stof(hdop_string));
-    }
+    nmea::parse::set_float(gsa::hdop, sentence, 15);
 
     // Parse VDOP.
-    std::string vdop_string = sentence.get_field(16);
-    if(!vdop_string.empty())
-    {
-        gsa::vdop.set(std::stof(vdop_string));
-    }
+    nmea::parse::set_float(gsa::vdop, sentence, 16);
 
     // Parse system type.
-    std::string system_string = sentence.get_field(17);
-    if(!system_string.empty())
-    {
-        gsa::system.set(static_cast<gsa::system_type>(std::stoi(system_string)));
-    }
+    nmea::parse::set_enum(gsa::system, sentence, 17);
 }

@@ -14,27 +14,13 @@ gll::gll(const nmea::sentence& sentence)
     gll::talker = sentence.talker();
 
     // Parse latitude.
-    std::string latitude_string = sentence.get_field(0);
-    std::string latitude_direction_string = sentence.get_field(1);
-    if(!latitude_string.empty() && !latitude_direction_string.empty())
-    {
-        gll::latitude.set(nmea::parse::latitude(latitude_string, latitude_direction_string));
-    }
+    nmea::parse::set_latitude(gll::latitude, sentence, 0);
 
     // Parse longitude.
-    std::string longitude_string = sentence.get_field(2);
-    std::string longitude_direction_string = sentence.get_field(3);
-    if(!longitude_string.empty() && !longitude_direction_string.empty())
-    {
-        gll::longitude.set(nmea::parse::longitude(longitude_string, longitude_direction_string));
-    }
+    nmea::parse::set_longitude(gll::longitude, sentence, 2);
 
     // Parse UTC time of day.
-    std::string utc_string = sentence.get_field(4);
-    if(!utc_string.empty())
-    {
-        gll::utc.set(nmea::parse::utc(utc_string));
-    }
+    nmea::parse::set_utc(gll::utc, sentence, 4);
 
     // Parse status.
     std::string status_string = sentence.get_field(5);
