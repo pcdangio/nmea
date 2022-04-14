@@ -1,4 +1,4 @@
-#include <nmea/gsa.hpp>
+#include <nmea/message/gsa.hpp>
 
 #include "parse.hpp"
 
@@ -25,7 +25,7 @@ gsa::gsa(const nmea::sentence& sentence)
     }
 
     // Parse fix type.
-    nmea::parse::set_enum(gsa::fix, sentence, 1);
+    nmea::parse_enum(gsa::fix, sentence, 1);
 
     // Parse satellite IDs.
     gsa::satellites.reserve(12);
@@ -44,14 +44,14 @@ gsa::gsa(const nmea::sentence& sentence)
     }
 
     // Parse PDOP.
-    nmea::parse::set_float(gsa::pdop, sentence, 14);
+    nmea::parse_float(gsa::pdop, sentence, 14);
 
     // Parse HDOP.
-    nmea::parse::set_float(gsa::hdop, sentence, 15);
+    nmea::parse_float(gsa::hdop, sentence, 15);
 
     // Parse VDOP.
-    nmea::parse::set_float(gsa::vdop, sentence, 16);
+    nmea::parse_float(gsa::vdop, sentence, 16);
 
     // Parse system type.
-    nmea::parse::set_enum(gsa::system, sentence, 17);
+    nmea::parse_enum(gsa::system, sentence, 17);
 }

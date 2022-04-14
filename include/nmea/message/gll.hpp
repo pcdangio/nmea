@@ -5,30 +5,14 @@
 
 #include <nmea/sentence.hpp>
 #include <nmea/field.hpp>
+#include <nmea/object/status.hpp>
+#include <nmea/object/mode.hpp>
 
 namespace nmea {
 
 /// \brief An NMEA GLL sentence.
 struct gll
 {
-    // OBJECTS
-    /// \brief Enumerates data status types.
-    enum class status_type
-    {
-        DATA_VALID = 0,     ///< Data is valid.
-        DATA_INVALID = 1    ///< Data is invalid.
-    };
-    /// \brief Enumerates the FFA mode types.
-    enum class mode_type
-    {
-        AUTONOMOUS = 0,     ///< Autonomous mode.
-        DIFFERENTIAL = 1,   ///< Differential GPS (DGPS) mode.
-        ESTIMATED = 2,      ///< Estimated dead-reckoning mode.
-        MANUAL = 3,         ///< Manual input mode.
-        SIMULATED = 4,      ///< Simulation mode.
-        INVALID = 5         ///< Data is invalid.
-    };
-
     // CONSTRUCTORS
     /// \brief Creates a new GLL instance from an NMEA sentence.
     /// \param sentence The NMEA sentence to parse the GLL sentence from.
@@ -44,9 +28,9 @@ struct gll
     /// \brief The UTC time of day, in seconds.
     nmea::field<double> utc;
     /// \brief The status of the fix data.
-    nmea::field<status_type> status;
+    nmea::field<nmea::status> status;
     /// \brief The mode of the receiver.
-    nmea::field<mode_type> mode;
+    nmea::field<nmea::mode> mode;
 };
 
 }

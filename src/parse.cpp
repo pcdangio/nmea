@@ -1,7 +1,7 @@
 #include "parse.hpp"
 
 // BASE
-void nmea::parse::set_uint8(nmea::field<uint8_t>& field, const nmea::sentence& sentence, uint8_t field_index)
+void nmea::parse_uint8(nmea::field<uint8_t>& field, const nmea::sentence& sentence, uint8_t field_index)
 {
     // Get field string.
     std::string field_string = sentence.get_field(field_index);
@@ -13,7 +13,7 @@ void nmea::parse::set_uint8(nmea::field<uint8_t>& field, const nmea::sentence& s
         field.set(std::stoul(field_string));
     }
 }
-void nmea::parse::set_uint16(nmea::field<uint16_t>& field, const nmea::sentence& sentence, uint8_t field_index)
+void nmea::parse_uint16(nmea::field<uint16_t>& field, const nmea::sentence& sentence, uint8_t field_index)
 {
     // Get field string.
     std::string field_string = sentence.get_field(field_index);
@@ -25,7 +25,7 @@ void nmea::parse::set_uint16(nmea::field<uint16_t>& field, const nmea::sentence&
         field.set(std::stoul(field_string));
     }
 }
-void nmea::parse::set_float(nmea::field<float>& field, const nmea::sentence& sentence, uint8_t field_index)
+void nmea::parse_float(nmea::field<float>& field, const nmea::sentence& sentence, uint8_t field_index)
 {
     // Get field string.
     std::string field_string = sentence.get_field(field_index);
@@ -39,7 +39,7 @@ void nmea::parse::set_float(nmea::field<float>& field, const nmea::sentence& sen
 }
 
 // EXTENDED
-void nmea::parse::set_utc(nmea::field<double>& field, const nmea::sentence& sentence, uint8_t field_index)
+void nmea::parse_utc(nmea::field<double>& field, const nmea::sentence& sentence, uint8_t field_index)
 {
     // Get field string.
     std::string field_string = sentence.get_field(field_index);
@@ -62,7 +62,31 @@ void nmea::parse::set_utc(nmea::field<double>& field, const nmea::sentence& sent
         field.set(utc);
     }
 }
-void nmea::parse::set_latitude(nmea::field<double>& field, const nmea::sentence& sentence, uint8_t field_index)
+void nmea::parse_date(nmea::field<nmea::date>& field, const nmea::sentence& sentence, uint8_t field_index)
+{
+    // Get field string.
+    std::string field_string = sentence.get_field(field_index);
+
+    // Check if field exists.
+    if(!field_string.empty())
+    {
+        // Create date structure.
+        nmea::date date;
+
+        // Get day.
+        date.day = std::stoul(field_string.substr(0,2));
+
+        // Get month.
+        date.month = std::stoul(field_string.substr(2, 2));
+
+        // Get year.
+        date.year = std::stoul(field_string.substr(4, 2));
+
+        // Set field with enum value.
+        field.set(date);
+    }
+}
+void nmea::parse_latitude(nmea::field<double>& field, const nmea::sentence& sentence, uint8_t field_index)
 {
     // Get field strings.
     std::string latitude_string = sentence.get_field(field_index);
@@ -89,7 +113,7 @@ void nmea::parse::set_latitude(nmea::field<double>& field, const nmea::sentence&
         field.set(latitude);
     }
 }
-void nmea::parse::set_longitude(nmea::field<double>& field, const nmea::sentence& sentence, uint8_t field_index)
+void nmea::parse_longitude(nmea::field<double>& field, const nmea::sentence& sentence, uint8_t field_index)
 {
     // Get field strings.
     std::string longitude_string = sentence.get_field(field_index);
@@ -114,5 +138,58 @@ void nmea::parse::set_longitude(nmea::field<double>& field, const nmea::sentence
 
         // Set field.
         field.set(longitude);
+    }
+}
+void nmea::parse_status(nmea::field<nmea::status>& field, const nmea::sentence& sentence, uint8_t field_index)
+{
+    // Get field string.
+    std::string field_string = sentence.get_field(field_index);
+
+    // Check if field exists.
+    if(!field_string.empty())
+    {
+        if(field_string == "A")
+        {
+            field.set(nmea::status::ACTIVE);
+        }
+        else if(field_string == "V")
+        {
+            field.set(nmea::status::VOID);
+        }
+    }
+}
+void nmea::parse_mode(nmea::field<nmea::mode>& field, const nmea::sentence& sentence, uint8_t field_index)
+{
+    // Get field string.
+    std::string field_string = sentence.get_field(field_index);
+
+    // Check if field exists.
+    if(!field_string.empty())
+    {
+        // Resolve value and set field.
+        if(field_string == "A")
+        {
+            field.set(nmea::mode::AUTONOMOUS);
+        }
+        else if(field_string == "D")
+        {
+            field.set(nmea::mode::DIFFERENTIAL);
+        }
+        else if(field_string == "E")
+        {
+            field.set(nmea::mode::ESTIMATED);
+        }
+        else if(field_string == "M")
+        {
+            field.set(nmea::mode::MANUAL);
+        }
+        else if(field_string == "S")
+        {
+            field.set(nmea::mode::SIMULATED);
+        }
+        else if(field_string == "N")
+        {
+            field.set(nmea::mode::INVALID);
+        }
     }
 }

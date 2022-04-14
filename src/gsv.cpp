@@ -1,4 +1,4 @@
-#include <nmea/gsv.hpp>
+#include <nmea/message/gsv.hpp>
 
 #include "parse.hpp"
 
@@ -11,13 +11,13 @@ gsv::gsv(const nmea::sentence& sentence)
     gsv::talker = sentence.talker();
 
     // Parse message count.
-    nmea::parse::set_uint8(gsv::message_count, sentence, 0);
+    nmea::parse_uint8(gsv::message_count, sentence, 0);
 
     // Parse message number.
-    nmea::parse::set_uint8(gsv::message_number, sentence, 1);
+    nmea::parse_uint8(gsv::message_number, sentence, 1);
 
     // Parse satellite count.
-    nmea::parse::set_uint8(gsv::satellite_count, sentence, 2);
+    nmea::parse_uint8(gsv::satellite_count, sentence, 2);
 
     // Use n_fields to determine how many satellites are in this message.
     uint8_t n_entries = (sentence.field_count() - 3) / 4;
@@ -30,16 +30,16 @@ gsv::gsv(const nmea::sentence& sentence)
         gsv::satellite satellite;
 
         // Parse PRN.
-        nmea::parse::set_uint8(satellite.prn, sentence, 3 + i*4);
+        nmea::parse_uint8(satellite.prn, sentence, 3 + i*4);
 
         // Parse elevation.
-        nmea::parse::set_uint8(satellite.elevation, sentence, 4 + i*4);
+        nmea::parse_uint8(satellite.elevation, sentence, 4 + i*4);
 
         // Parse azimuth.
-        nmea::parse::set_uint16(satellite.azimuth, sentence, 5 + i*4);
+        nmea::parse_uint16(satellite.azimuth, sentence, 5 + i*4);
 
         // Parse SNR.
-        nmea::parse::set_uint8(satellite.snr, sentence, 6 + i*4);
+        nmea::parse_uint8(satellite.snr, sentence, 6 + i*4);
 
         // Add satellite to vector.
         gsv::satellites.emplace_back(satellite);
