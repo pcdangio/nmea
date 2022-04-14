@@ -12,6 +12,11 @@
 namespace nmea {
 
 // BASE
+/// \brief Parses a INT8 field from an NMEA sentence.
+/// \param field The NMEA field to parse the value into.
+/// \param sentence The NMEA sentence to read the value from.
+/// \param field_index The index of the field in the NMEA sentence.
+void parse_int8(nmea::field<int8_t>& field, const nmea::sentence& sentence, uint8_t field_index);
 /// \brief Parses a UINT8 field from an NMEA sentence.
 /// \param field The NMEA field to parse the value into.
 /// \param sentence The NMEA sentence to read the value from.

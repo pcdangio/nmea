@@ -1,6 +1,18 @@
 #include "parse.hpp"
 
 // BASE
+void nmea::parse_int8(nmea::field<int8_t>& field, const nmea::sentence& sentence, uint8_t field_index)
+{
+    // Get field string.
+    std::string field_string = sentence.get_field(field_index);
+
+    // Check if field exists.
+    if(!field_string.empty())
+    {
+        // Set field with enum value.
+        field.set(std::stoi(field_string));
+    }
+}
 void nmea::parse_uint8(nmea::field<uint8_t>& field, const nmea::sentence& sentence, uint8_t field_index)
 {
     // Get field string.
