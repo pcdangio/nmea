@@ -5,6 +5,7 @@
 
 #include <string>
 #include <vector>
+#include <cstdint>
 
 /// \brief Contains all code related to NMEA processing.
 namespace nmea {
