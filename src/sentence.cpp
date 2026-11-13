@@ -90,7 +90,7 @@ std::string sentence::checksum(const std::string& nmea_string, std::size_t check
     // Calculate checksum = XOR of everything between $/! and *
     // NOTE: checksum_index = index of * delimiter.
     uint8_t checksum = 0;
-    for(uint8_t i = 1; i < checksum_index; ++i)
+    for(uint64_t i = 1; i < checksum_index; ++i)
     {
         checksum ^= nmea_string.at(i);
     }
