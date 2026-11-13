@@ -52,7 +52,7 @@ public:
 private:
     // VARIABLES
     /// \brief The stored value.
-    object_type m_value;
+    object_type m_value {};
     /// \brief Flag indicating if the value has been set.
     bool m_exists;
 };
